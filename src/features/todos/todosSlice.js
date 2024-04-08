@@ -1,9 +1,11 @@
 const initialState = [
-  { id: 0, text: 'Learn React', completed: true },
-  { id: 1, text: 'Learn Redux', completed: false, color: 'purple' },
-  { id: 2, text: 'Build something fun!', completed: false, color: 'blue' },
+  // { id: 0, text: 'Learn React', completed: true },
+  // { id: 1, text: 'Learn Redux', completed: false, color: 'purple' },
+  // { id: 2, text: 'Build something fun!', completed: false, color: 'blue' },
 ]
 
+// This function will return nextId, with finding the Math.max()
+// from
 function nextTodoId(todos) {
   const maxId = todos.reduce((maxId, todo) => Math.max(todo.id, maxId), -1)
   return maxId + 1
@@ -27,7 +29,6 @@ export default function todosReducer(state = initialState, action) {
         if (todo.id !== action.payload) {
           return todo
         }
-
         return {
           ...todo,
           completed: !todo.completed,
