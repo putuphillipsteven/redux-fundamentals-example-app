@@ -15,13 +15,19 @@ if (persistedTodosString) {
     todos: JSON.parse(persistedTodosString),
   }
 }
-const middlewareEnhancer = applyMiddleware(print1, print2, print3)
 
-const composedEnhancer = composeWithDevTools(
-  applyMiddleware(print1, print2, print3)
-)
+const alwaysReturnHelloMiddleware = (storeAPI) => (next) => (action) => {
+  const originalResult = next(action)
+  // Ignore the original result, return something else
+  return 'Hello!'
+}
 
-const store = createStore(rootReducer, composedEnhancer)
+const middlewareEnhancer = applyMiddleware(alwaysReturnHelloMiddleware)
+
+const composedEnhancer = compose(sayHiOnDispatch, includeMeaningOfLife)
+
+const store = createStore(rootReducer, middlewareEnhancer)
+const dispatchResult = store.dispatch({ type: 'some/action' })
+console.log(dispatchResult)
 
 export default store
-
